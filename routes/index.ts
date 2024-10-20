@@ -16,7 +16,10 @@ const router = Router();
 
 // #welcome route
 router.get('/', (request, response) => {
-  response.send('Welcome to "Shopping Bazaar" e-commerce web application api server');
+  response.send(`
+    Welcome to API service of "Shopping Bazaar" e-commerce web application. 
+    To visit the application click <a href="${process.env.CORS_ORIGIN_URL}">${process.env.CORS_ORIGIN_URL?.replace(/^https?:\/\//, '')}</a>.
+    `);
 });
 // #upload-file route
 router.post(
