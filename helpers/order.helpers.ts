@@ -2,7 +2,7 @@ import { createHmac } from 'crypto';
 import { Types } from 'mongoose';
 import { ParsedQs } from 'qs';
 import Razorpay from 'razorpay';
-import { Cart, Order } from '../mongoose/models';
+import { Cart, Order } from '../models';
 import { UserAddress } from '../types/global.type';
 
 const orderHelpers = {

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import otpGenerator from 'otp-generator';
-import { Otp, User } from '../mongoose/models';
+import { Otp, User } from '../models';
 import { mailSender } from '../utils/mailSender';
 
 const authHelpers = {

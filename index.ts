@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { Application } from 'express';
 import logger from 'morgan';
-import connectDB from './mongoose/connect';
+import connectDB from './config/mongodb';
 import routes from './routes';
 
 dotenv.config();

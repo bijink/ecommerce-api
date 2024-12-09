@@ -1,4 +1,4 @@
-import { Cart, Order, User } from '../mongoose/models';
+import { Cart, Order, User } from '../models';
 import { UserAddress } from '../types/global.type';
 
 const userHelpers = {

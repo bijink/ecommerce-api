@@ -1,5 +1,5 @@
 import { ParsedQs } from 'qs';
-import { Product } from '../mongoose/models';
+import { Product } from '../models';
 import { Product as ProductType } from '../types/global.type';
 
 const productHelpers = {

@@ -1,26 +1,32 @@
+import { Request } from 'express';
 import multer from 'multer';
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, process.env.UPLOAD_PATH as string);
-  },
-  filename: (req, file, cb) => {
-    const { for: fileFor, id } = req.query;
-    const idWithFileCount = `${id}_${req.query.count}`;
-    const fileExt = file.mimetype.split('/')[1];
-
-    const originalName = file.originalname;
-    let uploadingFileName = '';
-    if (originalName === 'no-image') uploadingFileName = originalName;
-    else uploadingFileName = `${fileFor}-${idWithFileCount}.${fileExt}`;
-
-    const fileCount = parseInt(req.query.count as string);
-    req.query.count = (fileCount + 1).toString();
-
-    cb(null, uploadingFileName);
-  },
-});
+import multerS3 from 'multer-s3';
+import s3 from '../config/s3';
 
 export const uploadFile = multer({
-  storage,
+  storage: multerS3({
+    s3: s3,
+    bucket:
+      process.env.NODE_ENV === 'development'
+        ? (process.env.MINIO_BUCKET_NAME as string)
+        : (process.env.AWS_BUCKET_NAME as string),
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req: Request, file, cb) {
+      const { for: fileFor, id } = req.query;
+      const idWithFileCount = `${id}_${req.query.count}`;
+      const fileExt = file.mimetype.split('/')[1];
+
+      const originalName = file.originalname;
+      let uploadingFileName = '';
+      if (originalName === 'no-image') uploadingFileName = originalName;
+      else uploadingFileName = `${fileFor}-${idWithFileCount}.${fileExt}`;
+
+      const fileCount = parseInt(req.query.count as string);
+      req.query.count = (fileCount + 1).toString();
+
+      cb(null, `uploads/${uploadingFileName}`);
+    },
+  }),
 });

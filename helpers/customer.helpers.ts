@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { ParsedQs } from 'qs';
-import { Cart, Product, User } from '../mongoose/models';
+import { Cart, Product, User } from '../models';
 
 const customerHelpers = {
   // #if no cart, add new cart doc | if cart doc exist & (product not exist, add product | product exist, increment cart quantity)
@@ -82,19 +82,7 @@ const customerHelpers = {
           },
         },
         {
-          $addFields: {
-            image: {
-              $arrayElemAt: [
-                {
-                  $arrayElemAt: ['$items.images', 0],
-                },
-                0,
-              ],
-            },
-          },
-        },
-        {
-          $unset: ['color._id', 'items.colors', 'items.sizes', 'items.images', 'items._id'],
+          $unset: ['color._id', 'items.colors', 'items.sizes', 'items._id'],
         },
         {
           $addFields: {
@@ -103,7 +91,6 @@ const customerHelpers = {
               product_id: '$product_id',
               color: '$color',
               size: '$size',
-              image: '$image',
               quantity: '$quantity',
             },
           },
