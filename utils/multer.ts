@@ -15,18 +15,15 @@ export const uploadFile = multer({
     },
     key: function (req: Request, file, cb) {
       const { for: fileFor, id } = req.query;
-      const idWithFileCount = `${id}_${req.query.count}`;
+      const fileCount = parseInt(req.query.count as string);
+      const timestamp = Date.now();
       const fileExt = file.mimetype.split('/')[1];
-
       const originalName = file.originalname;
       let uploadingFileName = '';
       if (originalName === 'no-image') uploadingFileName = originalName;
-      else uploadingFileName = `${fileFor}-${idWithFileCount}.${fileExt}`;
-
-      const fileCount = parseInt(req.query.count as string);
+      else uploadingFileName = `${fileFor}_${id}_${fileCount}_${timestamp}.${fileExt}`;
       req.query.count = (fileCount + 1).toString();
-
-      cb(null, `uploads/${uploadingFileName}`);
+      cb(null, uploadingFileName);
     },
   }),
 });
