@@ -56,16 +56,7 @@ const productHelpers = {
       return Promise.reject({ status: 500, data: { error } });
     }
   },
-  updateProduct: async (
-    prodId: string,
-    detailsToUpdate: {
-      name?: string;
-      category?: string;
-      price?: number;
-      description?: string;
-      images?: string[];
-    },
-  ) => {
+  updateProduct: async (prodId: string, detailsToUpdate: ProductType) => {
     try {
       const product = await Product.findOne({ _id: prodId });
       if (!product) return Promise.reject({ status: 404, data: { message: 'product not found' } });
