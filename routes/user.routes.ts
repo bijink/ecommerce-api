@@ -57,10 +57,10 @@ router.get('/get-product', async (request, response) => {
     response.status(400).send('product id required');
   }
 });
-router.get('/get-all-product', async (request, response) => {
+router.get('/get-all-products', async (request, response) => {
   const { sort, skip, limit } = request.query;
   productHelpers
-    .getAllProduct(sort, skip, limit)
+    .getAllProducts(sort, skip, limit)
     .then((res) => {
       response.status(res.status).send(res.data);
     })

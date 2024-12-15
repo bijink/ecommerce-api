@@ -13,7 +13,7 @@ const productHelpers = {
       return Promise.reject({ status: 400, data: error });
     }
   },
-  getAllProduct: async (
+  getAllProducts: async (
     sortOrder: ParsedQs[string],
     skip: ParsedQs[string],
     limit: ParsedQs[string],
@@ -56,11 +56,25 @@ const productHelpers = {
       return Promise.reject({ status: 500, data: { error } });
     }
   },
-  updateProduct: async (prodId: string, detailsToUpdate: ProductType) => {
+  updateProduct: async (routeMethod: string, prodId: string, detailsToUpdate: ProductType) => {
     try {
       const product = await Product.findOne({ _id: prodId });
       if (!product) return Promise.reject({ status: 404, data: { message: 'product not found' } });
-      await Product.updateOne({ _id: prodId }, detailsToUpdate);
+      if (routeMethod === 'put') {
+        // Replace the entire document
+        await Product.replaceOne({ _id: prodId }, detailsToUpdate, {
+          runValidators: true,
+        });
+      } else if (routeMethod === 'patch') {
+        // Update only the provided fields
+        await Product.updateOne(
+          { _id: prodId },
+          { $set: detailsToUpdate }, // Only update specified fields
+          {
+            runValidators: true, // Validate updated fields
+          },
+        );
+      }
       const updatedProduct = await Product.findById(prodId).exec();
       if (!updatedProduct)
         return Promise.reject({
