@@ -1,6 +1,6 @@
 {
-  "name": "shopping-bazaar_backend",
-  "version": "1.0.1",
+  "name": "ecommerce-api",
+  "version": "1.0.2",
   "main": "dist/index.js",
   "private": true,
   "scripts": {

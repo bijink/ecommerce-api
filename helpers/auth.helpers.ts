@@ -30,15 +30,15 @@ const authHelpers = {
       }
       // #send mail to user entered email
       const mailResponse = await mailSender({
-        fromEmail: '"Shopping Bazaar" <bijintestacc@gmail.com>',
+        fromEmail: '"ECommerce" <bijintestacc@gmail.com>',
         toEmail: email,
-        title: 'Shopping Bazaar - Sign up OTP',
+        title: 'ECommerce - Sign up OTP',
         htmlBody: `
           <div
             class="container"
             style="max-width: 90%; margin: auto; padding-top: 20px"
           >
-            <h2 style="text-align: center;">Welcome to Shopping Bazaar</h2>
+            <h2 style="text-align: center;">Welcome to ECommerce</h2>
             <p style="margin-bottom: 30px; text-align: center;">Pleas enter the sign up OTP to get started</p>
             <h1 style="font-size: 40px; letter-spacing: 2px; text-align: center;">${insertedOtp.otp}</h1>
           </div>
