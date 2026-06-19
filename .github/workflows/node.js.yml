@@ -61,3 +61,9 @@ jobs:
         run: |
           touch .env
           echo "${{ secrets.PROD_ENV_FILE }}" > .env
+
+      - name: Restart PM2
+        run: pm2 reload eca-service --update-env
+
+      - name: Save PM2 Process List
+        run: pm2 save
